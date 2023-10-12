@@ -54,7 +54,3 @@ func main() {
 
 	}
 }
-
-func convertToMb(val float64) float64 {
-	return val / 1024 / 1024
-}
