@@ -36,7 +36,7 @@ Before you can use this program, ensure you have the following:
 
 ```json
 {
-    "ChatID": -4039470109,
+    "ChatID": 0, // your chat id
     "BotToken": "YOUR_BOT_TOKEN"
 }
 ```
