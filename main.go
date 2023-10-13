@@ -13,7 +13,10 @@ import (
 	"syscall"
 )
 
-func checkFreeSpace(path string) (uint64, error) {
+func checkFreeSpace() (uint64, error) {
+
+	path := "/" // Change this to the directory or drive you want to check
+
 	var stat syscall.Statfs_t
 	if err := syscall.Statfs(path, &stat); err != nil {
 		return 0, err
@@ -29,8 +32,6 @@ func checkFreeSpace(path string) (uint64, error) {
 func main() {
 	// Get memory usage information
 
-	path := "/" // Change this to the directory or drive you want to check
-
 	for {
 		var memStats runtime.MemStats
 		runtime.ReadMemStats(&memStats)
@@ -41,14 +42,14 @@ func main() {
 			return
 		}
 
-		freeSpace, err := checkFreeSpace(path)
+		freeSpace, err := checkFreeSpace()
 
 		percentages, err := cpu.Percent(time.Second, false)
 
 		telegrambot.Inform(
 			fmt.Sprintf("Memory Used : %.2f%%\n", memoryInfo.UsedPercent) +
 				fmt.Sprintf("CPU Usage: %.2f%%\n", percentages[0]) +
-				fmt.Sprintf("Free space on %s: %d mb\n", path, freeSpace))
+				fmt.Sprintf("Free space on: %v mb\n", freeSpace))
 
 		time.Sleep(5 * time.Second)
 
